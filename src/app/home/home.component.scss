@@ -1,0 +1,28 @@
+.details{
+    position: fixed;
+
+    top:0;
+    right:0;
+    bottom: 0;
+
+    width:30%;
+
+    border-left: 1px solid #eee;
+    box-shadow: 1px 1px 1px #e3e3e3;
+
+    background: #f3f3f3;
+    padding:30px;
+
+    overflow-y: auto;
+
+    .details--close{
+        position: absolute;
+        top: 20px;
+        right: 20px;
+
+        color:#333;
+
+        cursor: pointer;
+    }
+    
+}
