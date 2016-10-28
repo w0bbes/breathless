@@ -5,7 +5,7 @@
     right:0;
     bottom: 0;
 
-    width:30%;
+    width:40%;
 
     border-left: 1px solid #eee;
     box-shadow: 1px 1px 1px #e3e3e3;
@@ -23,6 +23,12 @@
         color:#333;
 
         cursor: pointer;
+    }
+
+    .details--content{
+        .details--image__large{
+            max-width: 100%;
+        }
     }
     
 }

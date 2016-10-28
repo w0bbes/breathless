@@ -1,11 +1,11 @@
 import { 
-  Component, 
-  OnInit, 
-  style, 
-  state, 
-  animate, 
-  transition, 
-  trigger 
+  Component,
+  OnInit,
+  style,
+  state,
+  animate,
+  transition,
+  trigger
 } from '@angular/core';
 
 // types
@@ -20,7 +20,7 @@ import { ApiService } from '../shared/api.service';
   styleUrls: ['./home.component.scss'],
   animations: [
     trigger(
-      'slideIn', 
+      'slideIn',
       [
         transition(
           'void => *', [
@@ -32,7 +32,7 @@ import { ApiService } from '../shared/api.service';
          '* => void', [
            style({ transform: 'translateX(0%)' }),
            animate(100)
-         ] 
+         ]
         )
       ]
     )
@@ -44,11 +44,15 @@ export class HomeComponent implements OnInit {
   topics$: Array<Topic>;
   detailsAreShown: boolean;
   activeTopic: Topic;
+  sortType: string;
+  sortDirection: boolean;
 
   constructor(
     private apiService: ApiService
   ) {
     this.detailsAreShown = false;
+    this.sortType = '';
+    this.sortDirection = true;
   }
 
   /**
@@ -61,6 +65,11 @@ export class HomeComponent implements OnInit {
 
   showDetails(topic): void {
     this.activeTopic = topic;
+  }
+
+  sort(type: string, direction: boolean): void {
+    this.sortType = type;
+    this.sortDirection = direction;
   }
 
   ngOnInit() {

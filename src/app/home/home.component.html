@@ -3,12 +3,16 @@
   <thead>
     <tr>
       <th>Thumbnail</th>
-      <th>Titel</th>
-      <th>Auteur</th>
+      <th>Titel
+        <a (click)="sort('title', sortDirection = !sortDirection)">Sort</a>
+      </th>
+      <th>Auteur
+        <a (click)="sort('author', sortDirection = !sortDirection)">Sort</a>
+      </th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let topic of topics$" (click)="showDetails(topic); detailsAreShown = true">
+    <tr *ngFor="let topic of topics$ | orderBy: [sortType, sortDirection]" (click)="showDetails(topic); detailsAreShown = true">
       <td><img src="{{ topic.thumbnail }}" alt="{{ topic.title }}" title="{{ topic.title }}"></td>
       <td>{{ topic.title }}</td>
       <td>{{ topic.author }}</td>
@@ -20,7 +24,7 @@
   <h2 class="details--title">{{ activeTopic.title }}</h2>
   <h4 class="details--author">{{ activeTopic.author }}</h4>
   <div class="details--content">
-    <img src="{{ activeTopic.thumbnail }}" alt="{{ activeTopic.title }}" title="{{ activeTopic.title }}">
+    <img class="details--image__large" src="{{ activeTopic.large_image }}" alt="{{ activeTopic.title }}" title="{{ activeTopic.title }}">
   </div>
   <a class="details--close" (click)="detailsAreShown = false">Sluiten</a>
   <div class="comments">
