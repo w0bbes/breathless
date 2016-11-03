@@ -3,42 +3,84 @@ import { Http } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 
-import { Topic } from './types';
+import { Topic, Comment } from './types';
 import { API_URL } from './settings';
 
 @Injectable()
 export class ApiService {
 
   public reddit$: Observable<Array<Topic>>;
+  private comments: any = [];
 
   constructor(
     private http: Http
   ) {
     this.getTopics();
+    this.checkStorage();
   }
 
-  getTopics() {
+  getTopics(): void {
     this.reddit$ = this.http.get(`${API_URL}breathless.json`)
-      .map(response => response.json())
+        .map(response => response.json())
 
-      // for now, slice the first two mod posts
-      .map(json => json.data.children.slice(2))
-      .map(children =>
+        // for now, slice the first two mod posts
+        .map(json => json.data.children.slice(2))
+        .map(children =>
 
         // map only the objects that we want
         children.map(topic => {
 
-          let topicData = topic.data;
+            let topicData = topic.data;
 
-          // get the large preview, if it exists, else we'll keep the placeholder
-          let large_image = Object.keys(topicData.preview).length > 0 ? topicData.preview.images[0].source.url : 'https://placeholdit.imgix.net/~text?txtsize=45&txt=480%C3%97360&w=480&h=360';
+            // get the large preview, if it exists, else we'll keep the placeholder
+            let large_image = 
+            Object.keys(topicData.preview).length > 0 
+            ? topicData.preview.images[0].source.url 
+            : 'https://placeholdit.imgix.net/~text?txtsize=45&txt=480%C3%97360&w=480&h=360';
 
-          // destructure
-          let { author, title, thumbnail } = topicData;
+            // destructure
+            let { id, author, title, thumbnail } = topicData;
 
-          return new Topic(title, thumbnail, large_image, author, false);
+            // return a new topic instance
+            return new Topic(id, title, thumbnail, large_image, author, false);
 
-        })
-      );
-  }
+        }));
+    }
+
+    checkStorage(): void {
+        // if there are existing comments, set them
+        if (localStorage.getItem('comments')) {
+
+            let localComments = localStorage.getItem('comments');
+
+            if (localComments.length > 0) {
+                this.comments = JSON.parse(localStorage.getItem('comments'));
+            }
+
+        } else {
+            // else, create a new localstorage item
+            this.setStorage();
+        }
+    }
+
+    getStorage(): any {
+        return JSON.parse(localStorage.getItem('comments'));
+    }
+
+    setStorage(): void {
+        localStorage.setItem('comments', JSON.stringify(this.comments));
+    }
+
+    getCommentsForTopic(topic_id): Comment[] {
+        let comments = this.getStorage();
+
+        let topicComments = comments.filter(comment => comment.topic_id === topic_id);
+
+        return topicComments;
+    }
+
+    addComment(comment: Comment): void {
+        this.comments.push(comment);
+        this.setStorage();
+    }
 }

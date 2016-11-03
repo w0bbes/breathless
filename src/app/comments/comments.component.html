@@ -1,0 +1,36 @@
+<div class="comments-box">
+    <a class="pointer comment-link" (click)="showCommentBox = !showCommentBox">Laat een reactie achter</a>
+    <div class="comments-box-form" *ngIf="showCommentBox">
+        <form (ngSubmit)="addComment()" #commentsForm="ngForm">
+            <div class="form-group">
+                <label for="name">Naam</label>
+                <input type="text" class="form-control" id="name"
+                    [(ngModel)]="model.name"
+                    name="name"
+                    required
+                    #name="ngModel"
+                >
+                <div [hidden]="name.valid || name.pristine" 
+                    class="alert alert-danger">
+                    Naam is verplicht
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="comment">Reactie</label>
+                <textarea class="form-control" id="comment" cols="30" rows="10"
+                    [(ngModel)]="model.comment"
+                    name="comment"
+                    required
+                    #comment="ngModel"
+                ></textarea>
+                <div [hidden]="comment.valid || comment.pristine" 
+                    class="alert alert-danger">
+                    Reactie is verplicht
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-large btn-block btn-default" [disabled]="!commentsForm.form.valid">Reageer</button>
+
+        </form>
+    </div>
+</div>

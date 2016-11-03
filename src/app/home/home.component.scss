@@ -13,10 +13,10 @@
     background: #f3f3f3;
     padding:30px;
 
-    overflow-y: auto;
+    overflow-y: scroll;
 
     .details--close{
-        position: absolute;
+        position: fixed;
         top: 20px;
         right: 20px;
 

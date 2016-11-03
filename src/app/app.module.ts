@@ -5,6 +5,9 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { CommentsComponent } from './comments/comments.component'; 
+import { CommentsListComponent } from './comments-list/comments-list.component'; 
+
 import { ApiService } from './shared';
 import { routing } from './app.routing';
 
@@ -23,6 +26,8 @@ import { OrderByPipe } from './shared/pipes/orderby';
   declarations: [
     AppComponent,
     HomeComponent,
+    CommentsComponent,
+    CommentsListComponent,
     OrderByPipe
   ],
   providers: [

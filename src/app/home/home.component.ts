@@ -1,15 +1,14 @@
-import { 
+import {
   Component,
   OnInit,
   style,
-  state,
   animate,
   transition,
   trigger
 } from '@angular/core';
 
 // types
-import { Reddit, Topic } from '../shared/types';
+import { Topic } from '../shared/types';
 
 // service
 import { ApiService } from '../shared/api.service';
@@ -25,14 +24,8 @@ import { ApiService } from '../shared/api.service';
         transition(
           'void => *', [
             style({ transform: 'translateX(100%)' }),
-            animate(200)
+            animate(100)
           ]
-        ),
-        transition(
-         '* => void', [
-           style({ transform: 'translateX(0%)' }),
-           animate(100)
-         ]
         )
       ]
     )

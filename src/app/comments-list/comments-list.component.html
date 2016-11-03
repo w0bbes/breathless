@@ -1,0 +1,11 @@
+<div class="comments-list">
+    <div class="comments-list-items">
+        <div class="panel panel-default" *ngFor="let comment of comments">
+            <div class="panel-heading">{{ comment.name }}</div>
+            <div class="panel-body">
+                <p>{{ comment.comment }}</p>
+            </div>
+            <div class="panel-footer">{{ comment.date | date: 'dd/MM/yyyy' }}</div>
+        </div>
+    </div>
+</div>
