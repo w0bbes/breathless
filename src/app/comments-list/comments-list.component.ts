@@ -13,14 +13,18 @@ export class CommentsListComponent implements OnInit {
 
     @Input() topic;
 
-    comments: Comment[];
+    comments$: Array<Comment>;
 
     constructor(
         private apiService: ApiService
     ) { }
 
     getComments() {
-        this.comments = this.apiService.getCommentsForTopic(this.topic.id);
+
+        this.comments$ = this.apiService.comment$;
+
+        console.log(this.apiService.getCommentsForTopic(this.topic.topic_id));
+
     }
 
     ngOnInit() {

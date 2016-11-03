@@ -10,13 +10,16 @@ import { API_URL } from './settings';
 export class ApiService {
 
   public reddit$: Observable<Array<Topic>>;
-  private comments: any = [];
+  public comments: Comment[];
+  public comment$: Comment[] = [];
 
   constructor(
     private http: Http
   ) {
     this.getTopics();
     this.checkStorage();
+    this.setCommentsObservable();
+    this._logFeed();
   }
 
   getTopics(): void {
@@ -27,24 +30,25 @@ export class ApiService {
         .map(json => json.data.children.slice(2))
         .map(children =>
 
-        // map only the objects that we want
-        children.map(topic => {
+            // map only the objects that we want
+            children.map(topic => {
 
-            let topicData = topic.data;
+                let topicData = topic.data;
 
-            // get the large preview, if it exists, else we'll keep the placeholder
-            let large_image = 
-            Object.keys(topicData.preview).length > 0 
-            ? topicData.preview.images[0].source.url 
-            : 'https://placeholdit.imgix.net/~text?txtsize=45&txt=480%C3%97360&w=480&h=360';
+                // get the large preview, if it exists, else we'll keep the placeholder
+                let large_image = 
+                Object.keys(topicData.preview).length > 0 
+                ? topicData.preview.images[0].source.url 
+                : 'https://placeholdit.imgix.net/~text?txtsize=45&txt=480%C3%97360&w=480&h=360';
 
-            // destructure
-            let { id, author, title, thumbnail } = topicData;
+                // destructure
+                let { id, author, title, thumbnail } = topicData;
 
-            // return a new topic instance
-            return new Topic(id, title, thumbnail, large_image, author, false);
+                // return a new topic instance
+                return new Topic(id, title, thumbnail, large_image, author, false);
 
-        }));
+            })
+        );
     }
 
     checkStorage(): void {
@@ -71,16 +75,28 @@ export class ApiService {
         localStorage.setItem('comments', JSON.stringify(this.comments));
     }
 
-    getCommentsForTopic(topic_id): Comment[] {
-        let comments = this.getStorage();
+    setCommentsObservable(): void {
+        
+        Observable.from(this.comments)
+        
+        .subscribe(comments => {
+            this.comment$.push(comments);
+        });
 
-        let topicComments = comments.filter(comment => comment.topic_id === topic_id);
+    }
 
-        return topicComments;
+    getCommentsForTopic(topic_id): any {
+        
+        return this.comment$.filter(comment => comment.topic_id === topic_id);
+        // return topicComments;
     }
 
     addComment(comment: Comment): void {
-        this.comments.push(comment);
+        this.comment$.push(comment);
         this.setStorage();
+    }
+
+    private _logFeed() {
+        this.reddit$.subscribe(data => console.debug('data', data));
     }
 }
