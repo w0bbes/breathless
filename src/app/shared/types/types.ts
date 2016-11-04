@@ -19,6 +19,7 @@ export class Comment {
         public name: string,
         public comment: string,
         public date: Date,
-        public topic_id: string
+        public topic_id: string,
+        public id?: number,
     ){ }
 }

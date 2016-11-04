@@ -4,6 +4,8 @@ import { CommentsService } from '../shared/comments.service';
 
 import { Comment } from '../shared/types';
 
+import { Observable } from 'rxjs/Observable';
+
 @Component({
     selector: 'my-comments-list',
     templateUrl: 'comments-list.component.html',
@@ -12,8 +14,8 @@ import { Comment } from '../shared/types';
 export class CommentsListComponent implements OnInit {
 
     @Input() topic;
-    comments$: any;
-    singleTodo$: any;
+
+    comments$: Observable<Comment[]>;
 
     constructor(
         private commentsService: CommentsService
@@ -24,11 +26,10 @@ export class CommentsListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.comments$ = this.commentsService._comments$;
-        this.singleTodo$ = this.commentsService._comments$
-            .map(comments => comments.find(comment => comment.topic_id === this.topic.topic_id));
+    
+        this.comments$ = this.commentsService.comments$
+            .map(comments => comments.filter(comment => comment.topic_id === this.topic.topic_id));
 
         this.commentsService.getComments();
-        this.commentsService.getComment(this.topic.topic_id);
     }
 }
