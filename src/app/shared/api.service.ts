@@ -72,7 +72,7 @@ export class ApiService {
     }
 
     setStorage(): void {
-        localStorage.setItem('comments', JSON.stringify(this.comments));
+        localStorage.setItem('comments', JSON.stringify(this.comment$));
     }
 
     setCommentsObservable(): void {
