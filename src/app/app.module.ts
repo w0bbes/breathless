@@ -8,7 +8,9 @@ import { HomeComponent } from './home/home.component';
 import { CommentsComponent } from './comments/comments.component'; 
 import { CommentsListComponent } from './comments-list/comments-list.component'; 
 
-import { ApiService } from './shared';
+import { TopicsService } from './shared/topics.service';
+import { CommentsService } from './shared/comments.service';
+
 import { routing } from './app.routing';
 
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
@@ -31,7 +33,8 @@ import { OrderByPipe } from './shared/pipes/orderby';
     OrderByPipe
   ],
   providers: [
-    ApiService
+    TopicsService,
+    CommentsService
   ],
   bootstrap: [AppComponent]
 })

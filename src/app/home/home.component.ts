@@ -11,7 +11,7 @@ import {
 import { Topic } from '../shared/types';
 
 // service
-import { ApiService } from '../shared/api.service';
+import { TopicsService } from '../shared/topics.service';
 
 @Component({
   selector: 'my-home',
@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
   sortDirection: boolean;
 
   constructor(
-    private apiService: ApiService
+    private topicsService: TopicsService
   ) {
     this.detailsAreShown = false;
     this.sortType = '';
@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
    */
   getTopics(): void {
     // subscribe to the store observable
-    this.apiService.reddit$.subscribe(topics => this.topics$ = topics);
+    this.topicsService.reddit$.subscribe(topics => this.topics$ = topics);
   }
 
   showDetails(topic): void {

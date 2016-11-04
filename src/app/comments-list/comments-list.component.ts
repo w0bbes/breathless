@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { ApiService } from '../shared/api.service';
+import { CommentsService } from '../shared/comments.service';
 
 import { Comment } from '../shared/types';
 
@@ -12,22 +12,23 @@ import { Comment } from '../shared/types';
 export class CommentsListComponent implements OnInit {
 
     @Input() topic;
-
-    comments$: Array<Comment>;
+    comments$: any;
+    singleTodo$: any;
 
     constructor(
-        private apiService: ApiService
+        private commentsService: CommentsService
     ) { }
 
     getComments() {
 
-        this.comments$ = this.apiService.comment$;
-
-        console.log(this.apiService.getCommentsForTopic(this.topic.topic_id));
-
     }
 
     ngOnInit() {
-        this.getComments();
+        this.comments$ = this.commentsService._comments$;
+        this.singleTodo$ = this.commentsService._comments$
+            .map(comments => comments.find(comment => comment.topic_id === this.topic.topic_id));
+
+        this.commentsService.getComments();
+        this.commentsService.getComment(this.topic.topic_id);
     }
 }

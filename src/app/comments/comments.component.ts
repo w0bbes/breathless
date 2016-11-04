@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { Comment, Topic } from '../shared/types';
 
-import { ApiService } from '../shared/api.service';
+import { TopicsService } from '../shared/topics.service';
 
 @Component({
     selector: 'my-comments',
@@ -17,11 +17,11 @@ export class CommentsComponent implements OnInit {
     @Input() topic: Topic;
 
     constructor(
-        private apiService: ApiService
-    ) { }
+        private topicService: TopicsService
+    ) {}
 
     addComment(): void {
-        this.apiService.addComment(this.model);
+        this.topicService.addComment(this.model);
         this.model = new Comment('', '', new Date(), this.topic.id);
         this.showCommentBox = false;
     }
