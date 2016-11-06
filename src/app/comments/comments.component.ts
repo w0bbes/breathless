@@ -24,15 +24,19 @@ export class CommentsComponent implements OnInit {
 
     addComment(): void {
         this.commentsService.addComment(this.model);
+
+        // reset the comment box
         this.model = new Comment('', '', new Date(), this.topic.id);
         this.showCommentBox = false;
     }
 
     get diagnostic() {
+        // for debugging
         return JSON.stringify(this.model);
     }
 
     ngOnInit() {
+        // construct a new comment instance, so the form is filled
         this.model = new Comment('', '', new Date(), this.topic.id);
     }
 }

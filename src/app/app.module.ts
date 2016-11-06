@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { CommentsComponent } from './comments/comments.component'; 
-import { CommentsListComponent } from './comments-list/comments-list.component'; 
+import { CommentsComponent } from './comments/comments.component';
+import { CommentsListComponent } from './comments-list/comments-list.component';
 
 import { TopicsService } from './shared/topics.service';
 import { CommentsService } from './shared/comments.service';

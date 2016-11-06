@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 
-import { Topic, Comment } from './types';
+import { Topic } from './types';
 import { API_URL } from './settings';
 
 @Injectable()
@@ -31,9 +31,9 @@ export class TopicsService {
                 let topicData = topic.data;
 
                 // get the large preview, if it exists, else we'll keep the placeholder
-                let large_image = 
-                Object.keys(topicData.preview).length > 0 
-                ? topicData.preview.images[0].source.url 
+                let large_image =
+                Object.keys(topicData.preview).length > 0
+                ? topicData.preview.images[0].source.url
                 : 'https://placeholdit.imgix.net/~text?txtsize=45&txt=480%C3%97360&w=480&h=360';
 
                 // destructure

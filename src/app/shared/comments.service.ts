@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
 
 import { Comment } from './types';
+
+import { MOCK_API } from './settings';
 
 @Injectable()
 export class CommentsService {
@@ -19,9 +20,12 @@ export class CommentsService {
     constructor(
         private http: Http
     ) {
+        // fill the datastore so we have persistant data
         this.dataStore = { comments: [] };
+
+        // subject observable
         this._comments$ = <Subject<Comment[]>> new Subject();
-        this.baseUrl = 'http://581c951028a03411009e590b.mockapi.io/api';
+        this.baseUrl = MOCK_API;
     }
 
     get comments$() {
@@ -29,12 +33,12 @@ export class CommentsService {
     }
 
     getComments() {
-        
+
         this.http.get(`${this.baseUrl}/comments`)
             .map(response => response.json())
             .subscribe(data => {
                 this.dataStore.comments = data;
-                this._comments$.next(this.dataStore.comments)
+                this._comments$.next(this.dataStore.comments);
             });
     }
 
@@ -42,7 +46,7 @@ export class CommentsService {
         this.http.post(`${this.baseUrl}/comments`, comment)
             .map(response => response.json())
             .subscribe(data => {
-                this.dataStore.comments.push(data);
+                this.dataStore.comments.unshift(data);
                 this._comments$.next(this.dataStore.comments);
             });
     }
@@ -52,7 +56,6 @@ export class CommentsService {
             .subscribe(response => {
                 let itemIndex = this.dataStore.comments.indexOf(comment);
                 this.dataStore.comments.splice(itemIndex, 1);
-
                 this._comments$.next(this.dataStore.comments);
             });
     }

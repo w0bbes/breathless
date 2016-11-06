@@ -1,6 +1,8 @@
 <div class="comments-box">
-    <a class="pointer comment-link" (click)="showCommentBox = !showCommentBox">Laat een reactie achter</a>
+    <button type="submit" (click)="showCommentBox = !showCommentBox" class="btn btn-large btn-block btn-default">Laat een reactie achter</button>
+    <hr>
     <div class="comments-box-form" *ngIf="showCommentBox">
+        <h3>Reactieformulier</h3>
         <form (ngSubmit)="addComment()" #commentsForm="ngForm">
             <div class="form-group">
                 <label for="name">Naam</label>
@@ -29,7 +31,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-large btn-block btn-default" [disabled]="!commentsForm.form.valid">Reageer</button>
+            <button type="submit" class="btn btn-large btn-block btn-primary" [disabled]="!commentsForm.form.valid">Reageer</button>
 
         </form>
     </div>

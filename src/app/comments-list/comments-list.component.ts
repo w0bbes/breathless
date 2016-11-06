@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import { CommentsService } from '../shared/comments.service';
 
@@ -11,25 +11,32 @@ import { Observable } from 'rxjs/Observable';
     templateUrl: 'comments-list.component.html',
     styleUrls: ['comments-list.component.scss']
 })
-export class CommentsListComponent implements OnInit {
+export class CommentsListComponent implements OnInit, OnChanges {
 
     @Input() topic;
 
     comments$: Observable<Comment[]>;
+    amountOfComments: number;
 
     constructor(
         private commentsService: CommentsService
-    ) { }
+    ) {}
 
-    getComments() {
-
+    removeComment(comment) {
+        this.commentsService.removeComment(comment);
     }
 
-    ngOnInit() {
-    
-        this.comments$ = this.commentsService.comments$
-            .map(comments => comments.filter(comment => comment.topic_id === this.topic.topic_id));
+    ngOnInit() { }
+    ngOnChanges() {
 
+        // retrieve the observable
         this.commentsService.getComments();
+
+        // call it and subscribe to it with the async pipe in the html
+        this.comments$ = this.commentsService.comments$
+            .map(comments => comments.filter(comment => comment.topic_id === this.topic.id ));
+
+        // for the record, subscribe to get the amount of comments
+        this.comments$.subscribe(comments => this.amountOfComments = comments.length);
     }
 }

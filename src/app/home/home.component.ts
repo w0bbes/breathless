@@ -48,11 +48,8 @@ export class HomeComponent implements OnInit {
     this.sortDirection = true;
   }
 
-  /**
-   * getTopics returns the reddit data in a streaming observable
-   */
   getTopics(): void {
-    // subscribe to the store observable
+    // subscribe to the observable
     this.topicsService.reddit$.subscribe(topics => this.topics$ = topics);
   }
 

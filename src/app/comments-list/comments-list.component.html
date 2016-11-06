@@ -1,11 +1,20 @@
 <div class="comments-list">
+    <h3>Reactie's</h3>
+    <div class="comments-list-empty" *ngIf="amountOfComments === 0">
+        Nog geen reactie, wees de eerste!
+    </div>
     <div class="comments-list-items">
         <div class="panel panel-default" *ngFor="let comment of comments$ | async">
-            <div class="panel-heading">{{ comment.name }}</div>
+            <div class="panel-heading">
+                {{ comment.name }}
+
+                <a (click)="removeComment(comment)" class="pointer pull-right">Verwijderen</a>
+            </div>
             <div class="panel-body">
                 <p>{{ comment.comment }}</p>
             </div>
-            <div class="panel-footer">{{ comment.date | date: 'dd/MM/yyyy hh:mm' }}</div>
+            <div class="panel-footer">{{ comment.date | date: 'medium' }}</div>
         </div>
+        <hr>
     </div>
 </div>

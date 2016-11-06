@@ -11,7 +11,7 @@ export class Topic {
         public large_image: string,
         public author: string,
         public active: boolean
-    ){ }
+    ) {}
 }
 
 export class Comment {
@@ -21,5 +21,5 @@ export class Comment {
         public date: Date,
         public topic_id: string,
         public id?: number,
-    ){ }
+    ) {}
 }

@@ -1,44 +1,46 @@
-<h1>/r/breathless</h1>
-<table class="table table-hover">
-  <thead>
-    <tr>
-        <th>Thumbnail</th>
-        <th>Titel
-            <a class="pointer" (click)="sort('title', sortDirection = !sortDirection)">
-                <span class="glyphicon" [ngClass]="{ 
-                    'glyphicon-sort-by-alphabet': sortDirection, 'glyphicon-sort-by-alphabet-alt': !sortDirection 
-                    }" aria-label="Sort"
-                ></span>
-            </a>
-        </th>
-        <th>Auteur
-            <a class="pointer" (click)="sort('author', sortDirection = !sortDirection)">
-                <span class="glyphicon" [ngClass]="{ 
-                    'glyphicon-sort-by-alphabet': sortDirection, 'glyphicon-sort-by-alphabet-alt': !sortDirection 
-                    }" aria-label="Sort"
-                ></span>
-            </a>
-        </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let topic of topics$ | orderBy: [sortType, sortDirection]" (click)="showDetails(topic); detailsAreShown = true">
-        <td><img src="{{ topic.thumbnail }}" alt="{{ topic.title }}" title="{{ topic.title }}"></td>
-        <td>{{ topic.title }}</td>
-        <td>{{ topic.author }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="home" [class.details-active]="detailsAreShown">
+    <h1>/r/breathless</h1>
+    <table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Thumbnail</th>
+            <th>Titel
+                <a class="pointer" (click)="sort('title', sortDirection = !sortDirection)">
+                    <span class="glyphicon" [ngClass]="{ 
+                        'glyphicon-sort-by-alphabet': sortDirection, 'glyphicon-sort-by-alphabet-alt': !sortDirection 
+                        }" aria-label="Sort"
+                    ></span>
+                </a>
+            </th>
+            <th>Auteur
+                <a class="pointer" (click)="sort('author', sortDirection = !sortDirection)">
+                    <span class="glyphicon" [ngClass]="{ 
+                        'glyphicon-sort-by-alphabet': sortDirection, 'glyphicon-sort-by-alphabet-alt': !sortDirection 
+                        }" aria-label="Sort"
+                    ></span>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let topic of topics$ | myOrderBy: [sortType, sortDirection]" (click)="showDetails(topic); detailsAreShown = true">
+            <td><img src="{{ topic.thumbnail }}" alt="{{ topic.title }}" title="{{ topic.title }}"></td>
+            <td>{{ topic.title }}</td>
+            <td>{{ topic.author }}</td>
+        </tr>
+    </tbody>
+    </table>
 
-<div class="details" [@slideIn]="detailsAreShown" *ngIf="detailsAreShown">
-    <h2 class="details--title">{{ activeTopic.title }}</h2>
-    <h4 class="details--author">{{ activeTopic.author }}</h4>
-    <div class="details--content">
-        <img class="details--image__large" src="{{ activeTopic.large_image }}" alt="{{ activeTopic.title }}" title="{{ activeTopic.title }}">
+    <div class="details" [@slideIn]="detailsAreShown" *ngIf="detailsAreShown">
+         <a class="details--close" (click)="detailsAreShown = false">
+            <span class="glyphicon glyphicon-remove"></span>
+        </a>
+        <h2 class="details--title">{{ activeTopic.title }}</h2>
+        <div class="details--content">
+            <h4 class="details--author">{{ activeTopic.author }}</h4>
+            <img class="details--image__large" src="{{ activeTopic.large_image }}" alt="{{ activeTopic.title }}" title="{{ activeTopic.title }}">
+            <my-comments-list [topic]="activeTopic"></my-comments-list>
+            <my-comments [topic]="activeTopic"></my-comments>
+        </div>
     </div>
-    <a class="details--close" (click)="detailsAreShown = false">
-        <span class="glyphicon glyphicon-remove"></span>
-    </a>
-    <my-comments-list [topic]="activeTopic"></my-comments-list>
-    <my-comments [topic]="activeTopic"></my-comments>
 </div>

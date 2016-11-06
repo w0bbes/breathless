@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'orderBy'
+    name: 'myOrderBy'
 })
 
 export class OrderByPipe implements PipeTransform {
@@ -11,7 +11,7 @@ export class OrderByPipe implements PipeTransform {
 
             if (args[0].length > 0) {
 
-                let returnValue: number = 0;
+                let returnValue = 0;
                 let sortType: any = args[0];
 
                 // if the sort direction is true
@@ -19,8 +19,8 @@ export class OrderByPipe implements PipeTransform {
 
                     value.sort((a: any, b: any) => {
 
-                        returnValue = a[sortType].toLowerCase() < b[sortType].toLowerCase() 
-                        ? 1 
+                        returnValue = a[sortType].toLowerCase() < b[sortType].toLowerCase()
+                        ? 1
                         : -1;
 
                         return returnValue;
@@ -32,13 +32,13 @@ export class OrderByPipe implements PipeTransform {
 
                     value.sort((a: any, b: any) => {
 
-                        returnValue = a[sortType].toLowerCase() > b[sortType].toLowerCase() 
-                        ? 1 
+                        returnValue = a[sortType].toLowerCase() > b[sortType].toLowerCase()
+                        ? 1
                         : -1;
 
                         return returnValue;
-                        
-                    } );
+
+                    });
 
                 }
 

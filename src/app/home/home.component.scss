@@ -1,3 +1,13 @@
+.home {
+    padding: 20px;
+    
+    overflow-y: auto;
+    height: 100vh;
+
+    &.details-active{
+        margin-right:40%;
+    }
+}
 .details{
     position: fixed;
 
@@ -10,15 +20,23 @@
     border-left: 1px solid #eee;
     box-shadow: 1px 1px 1px #e3e3e3;
 
-    background: #f3f3f3;
-    padding:30px;
+    background: #f9f9f9;
 
     overflow-y: scroll;
+
+    .details--title{
+        width: 100%;
+        padding: 30px;
+        margin-top: 0;
+
+        background:#44A4FF;
+        color:#fff;
+    }
 
     .details--close{
         position: fixed;
         top: 20px;
-        right: 20px;
+        right: 30px;
 
         color:#333;
 
@@ -26,6 +44,7 @@
     }
 
     .details--content{
+        padding: 30px;
         .details--image__large{
             max-width: 100%;
         }
