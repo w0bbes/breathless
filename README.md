@@ -1,6 +1,7 @@
 ```bash
 # clone repo
 git clone https://github.com/w0bbes/breathless.git
+
 # install the dependencies with npm
 $ npm install
 
